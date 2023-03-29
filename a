@@ -1,0 +1,48 @@
+const http = require('http');
+const fs = require('fs');
+
+const server = http.createServer((req, res) => {
+  // Arkadaşınızın ismini buraya girin
+  const friendName = "Fenerbahçeli dostum";
+
+  // İyi ki doğdun mesajı
+  const birthdayMessage = `İyi ki doğdun ${friendName}!`;
+
+  // Arkadaşınızın sevdiği Fenerbahçe görsellerini buraya ekleyin
+  const images = [
+    "/1.jpg",
+    "url_görsel2",
+    "url_görsel3"
+  ];
+
+  // Rastgele bir görsel seçmek için bir fonksiyon
+  function getRandomImage(images) {
+    const randomIndex = Math.floor(Math.random() * images.length);
+    return images[randomIndex];
+  }
+
+  // HTML sayfasına görsel ve mesajı ekleme
+  const html = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>Doğum Günü Kutlaması</title>
+    </head>
+    <body>
+      <img src="${getRandomImage(images)}" alt="Fenerbahçe görseli">
+      <h1 style="color: yellow; font-size: 50px; text-shadow: 2px 2px navy;">
+        ${birthdayMessage}
+      </h1>
+    </body>
+    </html>
+  `;
+
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  res.write(html);
+  res.end();
+});
+
+server.listen(3000, () => {
+  console.log('Sunucu 3000 numaralı porta bağlandı.');
+});
+
